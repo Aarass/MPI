@@ -39,21 +39,30 @@ int main(int argc, char** argv)
 	MPI_Comm_rank(column_comm, &column_comm_rank);
 
 	int dest, source;
-	MPI_Cart_shift(cart_comm, 0, 2, &source, &dest);
+	MPI_Cart_shift(column_comm, 0, 1, &source, &dest);
+
+	//Gubi se topologija nakon splita
+
 
 	int sum;
 
 	if (column_comm_rank == 0)
 	{
-		sum = 10 + my_rank;
+		int k = 10;
+		sum = k;
 	}
 	else
 	{
 		MPI_Status status;
-		MPI_Recv(&sum, 1, MPI_INT, source, 0, column_comm_rank, &status);
+		MPI_Recv(&sum, 1, MPI_INT, source, MPI_ANY_TAG, column_comm, &status);
 	}
 
+	sum += my_rank;
 
+	if (dest != MPI_PROC_NULL)
+	{
+		MPI_Send(&sum, 1, MPI_INT, dest, 0, column_comm);
+	}
 
 
 
