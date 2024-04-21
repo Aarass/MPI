@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 	int dest, source;
 	MPI_Cart_shift(column_comm, 0, 1, &source, &dest);
 
-	//Gubi se topologija nakon splita
+	// Gubi se topologija nakon splita
 
 
 	int sum;
