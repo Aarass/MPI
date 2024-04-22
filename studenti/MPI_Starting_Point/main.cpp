@@ -40,12 +40,16 @@ int main(int argc, char* argv[])
     MPI_Comm_rank(DIAG, &my_rank);
 
     size_t imeLen, prezimeLen;
-    if (my_rank == 0)
+    if (global_rank == 0)
     {
-        student.brindeksa = 18577;
-        student.ime = "Teodora";
-        student.prezime = "Stanojevic";
-        student.prosecnaocena = 6.5;
+        std::cout << "Unesi indeks: ";
+        std::cin >> student.brindeksa;
+        std::cout << "Unesi ime: ";
+        std::cin >> student.ime;
+        std::cout << "Unesi prezime: ";
+        std::cin >> student.prezime;
+        std::cout << "Unesi prosecnu ocenu: ";
+        std::cin >> student.prosecnaocena;
 
         imeLen = student.ime.length() + 1;
         prezimeLen = student.prezime.length() + 1;
@@ -91,6 +95,8 @@ int main(int argc, char* argv[])
     if (global_rank == 0)
     {
         printf("Pre slanja: %d %s %s %f \n", *brindeksa, ime, prezime, *prosecnaocena);
+        printf("Pointeri: %p %p %p %p \n", brindeksa, ime, prezime, prosecnaocena);
+        printf("Displ: %d %d %d %d \n", displ[0], displ[1], displ[2], displ[3]);
     }
 
     MPI_Datatype MPI_STRING_IME;
